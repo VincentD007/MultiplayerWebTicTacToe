@@ -27,7 +27,6 @@ body {
 
 .gameboard div {
     display: flex;
-    background-color: white;
     width: 100px;
     height: 100px;
     align-items: center;

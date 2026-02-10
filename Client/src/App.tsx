@@ -35,11 +35,16 @@ function App() {
     <>
       <div id="container">
         <i><div className="gametext">{
-          (gameOver && turn.winner) ? `${turn.player} Wins!` : "Tic Tac Toe"
+          gameOver ? (turn.winner ? `${turn.player} Wins!` : "Its A Tie!") 
+          : "Tic Tac Toe"
         }</div></i>
 
         <div className="gameboard">
-          {board.map((elem, i) => <div key={i} id={`${i}`} onClick={(eventObj) => {
+          {board.map((elem, i) => <div 
+          key={i} 
+          id={`${i}`} 
+          style ={{backgroundColor: turn.winningCombo.includes(i) ? 'green' : 'white'}} 
+          onClick={(eventObj) => {
             const target = eventObj.target as HTMLDivElement;
             const spotID: number = Number(target.id);
             let newBoard: string[];
@@ -75,7 +80,25 @@ function App() {
 
         </div>
 
-        <button id="restartbtn">Restart</button>
+        <button 
+        id="restartbtn" 
+        onClick={() => {
+          let newBoard: string[];
+          newBoard = [...board];
+          newBoard.fill("");
+          let newTurn = {
+            player: (Math.round(Math.random()) == 0 ? "X" : "O"),
+            winner: false,
+            winningCombo: [] as number[]
+          };
+
+          setBoard(newBoard);
+          setTurn(newTurn);
+          setGameOver(false);
+          setTotalPlays(0);
+
+        }}>Restart</button>
+
     </div>
     </>
   )
